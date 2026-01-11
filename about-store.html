@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT STORE - DITPREMISME</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0d0d0d;
+            --bg-card: rgba(15, 15, 15, 0.95);
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --accent: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.15);
+            --shadow: rgba(0, 0, 0, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --bg-card: rgba(255, 255, 255, 0.98);
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --accent: #000000;
+            --accent-glow: rgba(0, 0, 0, 0.08);
+            --shadow: rgba(0, 0, 0, 0.05);
+            --border: rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--text-primary);
+        }
+
+        .container {
+            background: var(--bg-card);
+            backdrop-filter: blur(30px);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .back-btn {
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            transform: translateX(-3px);
+        }
+
+        body.light-mode .back-btn:hover {
+            color: var(--bg-card);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .faq-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-primary);
+        }
+
+        .faq-question-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .faq-arrow {
+            font-size: 12px;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 20px 18px 20px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .faq-question {
+                padding: 16px 18px;
+            }
+
+            .faq-question-text {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/>
+            <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <a href="#" class="back-btn" onclick="goBack(event)">
+            <span>←</span>
+            <span>Kembali</span>
+        </a>
+
+        <div class="header">
+            <h1>Pertanyaan yang Sering Diajukan</h1>
+            <p class="subtitle">Temukan jawaban untuk pertanyaan umum seputar DITPREMISME</p>
+        </div>
+
+        <!-- Tentang DITPREMISME -->
+        <div class="section">
+            <div class="section-title">Tentang DITPREMISME</div>
+            
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Apa itu DITPREMISME?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        DITPREMISME adalah platform terpercaya yang menyediakan berbagai produk digital premium dengan harga terjangkau. Kami menawarkan akses ke layanan streaming, aplikasi editing, musik, AI tools, dan banyak lagi dengan garansi resmi.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Apa tagline resmi DITPREMISME?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        "Solusi Produk Digital Terbaik" - Kami berkomitmen memberikan solusi terbaik untuk semua kebutuhan produk digital Anda dengan layanan 24/7 dan harga yang kompetitif.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Apakah DITPREMISME aman dan terpercaya?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Ya, sangat aman! Kami telah melayani lebih dari 500+ pengguna dengan tingkat kepuasan tinggi. Kami menyediakan Auto Order 24/7 untuk mempermudah transaksi Anda.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Kenapa harus beli produk di DITPREMISME?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        • Harga lebih murah dari official<br>
+                        • Produk memiliki garansi toko<br>
+                        • Transaksi otomatis 24/7<br>
+                        • Proses cepat dan mudah<br>
+                        • Payment method lengkap<br>
+                        • Produk selalu up-to-date
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reseller -->
+        <div class="section">
+            <div class="section-title">Reseller</div>
+            
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Apa keuntungan bergabung jadi reseller?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        • Dapatkan harga khusus reseller (lebih murah)<br>
+                        • Profit margin yang menguntungkan<br>
+                        • Akses BOT otomatis untuk order<br>
+                        • Gratis panduan jualan<br>
+                        • Support prioritas dari tim kami<br>
+                        • Tanpa target penjualan
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Apakah ada harga khusus untuk reseller?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Ya! Reseller mendapatkan harga spesial yang lebih murah dibanding harga customer. Selisih harga ini menjadi profit Anda. Semakin banyak order, semakin besar keuntungan yang didapat.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    <span class="faq-question-text">Bagaimana cara menjadi reseller DITPREMISME?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        1. Hubungi admin melalui WhatsApp / Telegram<br>
+                        2. Daftar sebagai reseller (gratis, tanpa biaya)<br>
+                        3. Dapatkan akses Grup Khusus Reseller (tersedia bot auto order)<br>
+                        4. Mulai jualan dan raih profit!<br><br>
+                        Sangat mudah dan tanpa ribet. Kami siap membimbing Anda dari awal.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            // Tutup semua FAQ yang terbuka
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle FAQ yang diklik
+            element.classList.toggle('active');
+        }
+
+        function goBack(e) {
+            e.preventDefault();
+            window.history.back();
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const sun = document.querySelector('.sun-icon');
+            const moon = document.querySelector('.moon-icon');
+            
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                sun.style.display = 'block';
+                moon.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            } else {
+                sun.style.display = 'none';
+                moon.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const theme = localStorage.getItem('theme');
+            const sun = document.querySelector('.sun-icon');
+            const moon = document.querySelector('.moon-icon');
+            
+            if (theme === 'light') {
+                document.body.classList.add('light-mode');
+                sun.style.display = 'block';
+                moon.style.display = 'none';
+            } else {
+                moon.style.display = 'block';
+                sun.style.display = 'none';
+                if (!theme) localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
